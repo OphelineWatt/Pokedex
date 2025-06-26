@@ -28,7 +28,8 @@ const HomePage = () => {
 
 
     return <div className='d-flex flex-column align-items-center justify-content-center'>
-        <h1>Bienvenue dans ton pokedex !</h1>
+        <h1 className="pokemon-title">Pokedex</h1>
+
 
     <input
         type='texte'

@@ -2,11 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 
 
 const PokemonCard = ({pokemonC}) => {
 
-    const [sprite, setSprite] = useState("")
+    const [sprite, setSprite] = useState()
 
     const fetchPhoto = async (pokemonC) => {
         try {
@@ -16,7 +17,7 @@ const PokemonCard = ({pokemonC}) => {
 
             setSprite(response.data.sprites.other['home'].front_default);
             
-            console.log(response);
+            // console.log(response);
             
             
 
@@ -33,7 +34,9 @@ const PokemonCard = ({pokemonC}) => {
       <Card.Img variant="top" src={sprite} />
       <Card.Body>
         <Card.Title>{pokemonC.name}</Card.Title>
-        <Button variant="primary">Go somewhere</Button>
+        <Link to={`/details/${pokemonC.name}`}>
+        <Button variant="primary">Détails</Button>
+        </Link>
       </Card.Body>
     </Card>
     </>;
