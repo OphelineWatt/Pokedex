@@ -2,8 +2,6 @@ body{
     background-color: black;
     color: white;
 
-    
-    
 }
 
 .pokemon-title {
@@ -14,6 +12,13 @@ body{
   letter-spacing: 1px;
 }
 
+/* Pour avoir ma barre de recherche + petite */
+.barre{
+    width: 20%;
+    
+}
+
+/* Classe pour avoir mes élements l'un à côté de l'autre */
 .rowStyle{
   display: flex;
   gap: 10px;
