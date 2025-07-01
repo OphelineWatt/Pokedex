@@ -57,13 +57,15 @@ const HomePage = () => {
 
         <div className="d-flex justify-content-between align-items-center col-8">
           <button
-            className="btn btn-outline-secondary"
+            className="btn-pokedex"
+
             onClick={() => setPage(page - 20)}
           >
             ◀ Précédent​
           </button>
           <button
-            className="btn btn-outline-secondary"
+            className="btn-pokedex"
+
             onClick={() => setPage(page + 20)}
           >
             Suivant ▶​
@@ -78,13 +80,15 @@ const HomePage = () => {
 
         <div className="d-flex justify-content-between align-items-center col-8">
           <button
-            className="btn btn-outline-secondary"
+            className="btn-pokedex"
+
             onClick={() => setPage(page - 20)}
           >
             ◀ Précédent​
           </button>
           <button
-            className="btn btn-outline-secondary"
+            className="btn-pokedex"
+
             onClick={() => setPage(page + 20)}
           >
             Suivant ▶​

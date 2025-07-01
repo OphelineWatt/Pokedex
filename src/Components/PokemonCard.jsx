@@ -20,6 +20,9 @@ const PokemonCard = ({pokemonC}) => {
             setSprite(response.data.sprites.other['home'].front_default);
             setId(response.data.id);
             setCries(response.data.cries.latest)
+
+            
+            
             
             
             

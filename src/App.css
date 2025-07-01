@@ -35,4 +35,27 @@ text-align: center;
   justify-content: center;
 }
 
+.btn-pokedex {
+  background-color: #D32F2F; /* Rouge Pokédex */
+  color: #fff;
+  border: 2px solid #000;
+  border-radius: 999px;
+  padding: 0.6rem 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 4px #00000066;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Arial', sans-serif;
+}
+
+.btn-pokedex:hover {
+  background-color: #B71C1C;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-pokedex:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+}
+
 
