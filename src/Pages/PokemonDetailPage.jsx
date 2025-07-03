@@ -8,6 +8,8 @@ import Image from "react-bootstrap/Image";
 import CloseButton from "react-bootstrap/CloseButton";
 import { useNavigate } from "react-router-dom";
 import EvolveCard from "../Components/EvolveCard";
+import { Card, Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
+import { chooseTeams, addPokemonToTeam } from "../services/teamService";
 
 
 
@@ -15,8 +17,9 @@ const PokemonDetailPage = () => {
   const [pokemonDetails, setPokemonDetail] = useState([]);
   const { name } = useParams();
   const navigate = useNavigate();
-
-
+  
+  
+  
   //Pour récuperer les details de mes pokemon
   const fetchDetail = async (pokemon) => {
     try {
@@ -24,21 +27,21 @@ const PokemonDetailPage = () => {
         `https://pokeapi.co/api/v2/pokemon/${name}`,
         {}
       );
-
+      
       setPokemonDetail(response.data.stats);
-
+      
       // console.log(response.data.stats);
     } catch (error) {
       console.error("Error fetching detail pokemon:", error);
     }
   };
-
+  
   const [names, setName] = useState();
   const [sprite, setSprite] = useState();
   const [types, setType] = useState([]);
   const [height, setHeight] = useState();
   const [weight, setweight] = useState();
-
+  
   
   const fetchPhoto = async () => {
     try {
@@ -52,8 +55,8 @@ const PokemonDetailPage = () => {
       setType(response.data.types);
       setHeight(response.data.height);
       setweight(response.data.weight);
-
-      console.log(response.data.sprites)
+      
+      
       
       
     } catch (error) {
@@ -68,7 +71,7 @@ const PokemonDetailPage = () => {
     try {
       const speciesRes = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
       const evolutionUrl = speciesRes.data.evolution_chain.url;
-      console.log(speciesRes);
+      // console.log(speciesRes);
       
       const evolutionChainRes = await axios.get(evolutionUrl);
       // console.log(evolutionChainRes);
@@ -81,27 +84,61 @@ const PokemonDetailPage = () => {
       console.error('Error fetching evolution data:', error);
     }
   }
+  const [modalAddTeam, setModalAddTeam]= useState(false);
+  const [teams, setTeams] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState('');
   
+  const userTeams = async () => {
+    try {
+      const response = await chooseTeams();
+      
+      setTeams(response.data)
+      
+      
+    } catch (error) {
+
+      console.error('Erreur lors de la récupération des équipes:', error)
+      
+    }
+  };
+
+  const handleAddPokemonTeam = async (e) => {
+
+    e.preventDefault();
+
+    console.log("coucou")
+    try {
+      console.log(selectedTeam)
+      console.log(name)
+      await addPokemonToTeam(selectedTeam, {pokemonName : name});
+      setModalAddTeam(false);
+      
+    } catch (error) {
+
+      console.error('Erreur lors de lajout du pokemon à lequipe :', error)
+      
+    }
+  }
   
   useEffect(() => {
     fetchDetail();
     fetchPhoto();
     fetchEvolution();
+    userTeams();
   }, [name]);
   
   const extractEvolutions = (chain) => {
-  const evolutionNames = [];
-
+    const evolutionNames = [];
+    
   let current = chain;
-
+  
   while (current && current.species){
     evolutionNames.push(current.species.name)
     current = current.evolves_to[0];
   }
-
-  console.log();
   
-
+  
+  
   return evolutionNames
 }
   return (
@@ -124,8 +161,36 @@ const PokemonDetailPage = () => {
             <p>Taille : {height / 10}M</p>
             <p>Poids: {weight / 10}Kg</p>
           </div>
-
-          {/* console.log(type.type.name) */}
+      <Button variant="danger" onClick={() => setModalAddTeam(true)}>
+        ajouter à l'équipe
+      </Button>
+<Modal show={modalAddTeam} onHide={() => setModalAddTeam(false)}>
+                    <Form onSubmit={handleAddPokemonTeam}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>ajout d'un pokemon dans une équipe</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form.Group>
+                                <Form.Label>Nom d’équipe</Form.Label>
+                                <Form.Select
+                                value={selectedTeam}
+                                onChange={(e) => setSelectedTeam(e.target.value)}
+                                >
+                                  <option value="">Sélectionner une équipe</option>
+                                  {teams.map(index => (
+                                    <option key={index.idTeams} value={index.idTeams}>
+                                      {index.teamName}
+                                    </option>
+                                  ))}
+                                </Form.Select>
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setModalAddTeam(false)}>Annuler</Button>
+                            <Button type="submit" variant="primary">ajouter</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
 
           <div className="rowStyle">
             {types.map((type) => (

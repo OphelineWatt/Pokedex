@@ -8,6 +8,8 @@ const HomePage = () => {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
 
+
+
   const fetchPokemon = async () => {
     try {
       if (search === "") {

@@ -23,7 +23,7 @@ const EvolveCard = ({ name }) => {
     fetchEvol();
   }, [name]);
 
-  console.log(name);
+  // console.log(name);
   
 
   return (
