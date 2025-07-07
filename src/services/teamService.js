@@ -18,7 +18,7 @@ export const chooseTeams = () => API.get(`/chooseTeams`,{
     }
 });
 
-export const userTeams = () => API.get(`/userTeams`,{
+export const showTeams = () => API.get(`/userTeams`,{
             headers:{
         Authorization: `${localStorage.getItem('token')}`
     }
